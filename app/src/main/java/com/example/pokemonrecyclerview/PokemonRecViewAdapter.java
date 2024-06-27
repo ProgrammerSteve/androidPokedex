@@ -1,6 +1,10 @@
 package com.example.pokemonrecyclerview;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +67,14 @@ public class PokemonRecViewAdapter extends RecyclerView.Adapter<PokemonRecViewAd
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, pokemon.getName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, pokemon.getName(), Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(context, PokemonInfoActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("name",pokemon.getName());
+                bundle.putString("id",String.valueOf(pokemon.getId()));
+                bundle.putString("image",pokemon.getSprites().getFront_default());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
 
