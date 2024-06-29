@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:background="#DF2828"
+    android:background="#6A4242"
     tools:context=".MainActivity">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="20dp"
-        app:cardBackgroundColor="#DAB6B6"
+        app:cardBackgroundColor="#F1A7A7"
         app:cardCornerRadius="20dp">
 
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#DAB6B6"
+            android:background="#F1A7A7"
             >
 
             <TextView
