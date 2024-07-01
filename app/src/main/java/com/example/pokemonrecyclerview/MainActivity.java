@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         PokemonService service = retrofit.create(PokemonService.class);
-        Call<PokemonListResponse> call = service.getPokemonList(10, 0); // Fetch the first 20 Pokémon
+        Call<PokemonListResponse> call = service.getPokemonList(25, 0); // Fetch the first 20 Pokémon
 
         call.enqueue(new Callback<PokemonListResponse>() {
             @Override

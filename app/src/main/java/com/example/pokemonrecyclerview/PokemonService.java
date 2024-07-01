@@ -10,4 +10,8 @@ public interface PokemonService {
 
     @GET("/api/v2/pokemon/{id}")
     Call<Pokemon> getPokemonDetails(@Path("id") String id);
+
+    @GET("/api/v2/pokemon-species/{id}")
+    Call<PokemonSpecies> getPokemonSpecies(@Path("id") String id);
 }
+

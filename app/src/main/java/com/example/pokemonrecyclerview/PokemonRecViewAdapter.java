@@ -27,27 +27,6 @@ public class PokemonRecViewAdapter extends RecyclerView.Adapter<PokemonRecViewAd
     private List<Pokemon> pokemonList;
     private Context context;
 
-
-    private String formatName(String name){
-        if(name==null){
-            return "";
-        }
-        String first=name.substring(0,1).toUpperCase();
-        String rest=name.substring(1);
-        return first+rest;
-    }
-
-    private String formatId(String id){
-        if(id==null){
-            return "000";
-        }
-        int len=id.length();
-        if(len>3){
-            return id;
-        }
-        return "0".repeat(3-len)+id;
-    }
-
     public PokemonRecViewAdapter(Context context) {
         this.context = context;
         this.pokemonList = new ArrayList<>();
@@ -82,8 +61,8 @@ public class PokemonRecViewAdapter extends RecyclerView.Adapter<PokemonRecViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon pokemon = pokemonList.get(position);
 
-        holder.pokemonName.setText(formatName(pokemon.getName()));
-        holder.pokemonId.setText(formatId(String.valueOf(pokemon.getId()))); // Convert int to String
+        holder.pokemonName.setText(Utils.formatName(pokemon.getName()));
+        holder.pokemonId.setText(Utils.formatId(String.valueOf(pokemon.getId()))); // Convert int to String
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,8 +70,25 @@ public class PokemonRecViewAdapter extends RecyclerView.Adapter<PokemonRecViewAd
                 //Toast.makeText(context, pokemon.getName(), Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(context, PokemonInfoActivity.class);
                 Bundle bundle=new Bundle();
-                bundle.putString("name",formatName(pokemon.getName()));
-                bundle.putString("id",formatId(String.valueOf(pokemon.getId())));
+                bundle.putString("name",Utils.formatName(pokemon.getName()));
+
+
+
+
+
+                bundle.putString("typeOne",pokemon.getTypes().get(0).getType().getName());
+                if(pokemon.getTypes().size()==2){
+                    bundle.putString("typeTwo",pokemon.getTypes().get(1).getType().getName());
+                }else {
+                    bundle.putString("typeTwo","");
+                }
+
+
+
+
+
+
+                bundle.putString("id",String.valueOf(pokemon.getId()));
                 bundle.putString("image",pokemon.getSprites().getFront_default());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
