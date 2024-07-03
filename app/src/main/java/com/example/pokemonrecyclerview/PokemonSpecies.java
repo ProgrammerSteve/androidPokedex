@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 public class PokemonSpecies {
-    private List<FlavorTextEntry> flavorTextEntries;
+    private List<FlavorTextEntry> flavor_text_entries;
 
     @Data
     public static class FlavorTextEntry {
-        private String flavorText;
+        private String flavor_text;
         private Language language;
         private Version version; // Add Version class reference
     }

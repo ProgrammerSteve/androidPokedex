@@ -70,11 +70,10 @@ public class PokemonRecViewAdapter extends RecyclerView.Adapter<PokemonRecViewAd
                 //Toast.makeText(context, pokemon.getName(), Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(context, PokemonInfoActivity.class);
                 Bundle bundle=new Bundle();
+                bundle.putDouble("weight",pokemon.getWeight()/10);
+                bundle.putDouble("height",pokemon.getHeight()*10);
+
                 bundle.putString("name",Utils.formatName(pokemon.getName()));
-
-
-
-
 
                 bundle.putString("typeOne",pokemon.getTypes().get(0).getType().getName());
                 if(pokemon.getTypes().size()==2){
@@ -82,11 +81,6 @@ public class PokemonRecViewAdapter extends RecyclerView.Adapter<PokemonRecViewAd
                 }else {
                     bundle.putString("typeTwo","");
                 }
-
-
-
-
-
 
                 bundle.putString("id",String.valueOf(pokemon.getId()));
                 bundle.putString("image",pokemon.getSprites().getFront_default());

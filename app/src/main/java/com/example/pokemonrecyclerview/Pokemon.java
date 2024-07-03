@@ -30,8 +30,8 @@ public class Pokemon {
     private String name;
     private List<AbilityData> abilities;
     private Sprites sprites;
-
-
+    private double weight;
+    private double height;
 
     private List<TypeObj> types;
     @Data

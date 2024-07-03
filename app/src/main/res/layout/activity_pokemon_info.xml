@@ -37,12 +37,14 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/backCardBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:backgroundTint="#6A4242"
                 app:cardCornerRadius="25dp">
                 <ImageButton
+                    android:id="@+id/imageBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#00FFFFFF"
@@ -141,10 +143,12 @@
                 app:cardCornerRadius="10dp"
                 android:layout_weight="1">
                 <TextView
+                    android:textSize="18sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColor="#ffffff"
                     android:gravity="center"
+                    android:id="@+id/pokemonWeight"
                     android:text="102 kg"/>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -166,10 +170,12 @@
                 app:cardCornerRadius="10dp"
                 android:layout_weight="1">
                 <TextView
+                    android:textSize="18sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="#ffffff"
+                    android:id="@+id/pokemonHeight"
                     android:text="180 cm"/>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -197,18 +203,39 @@
             android:layout_height="match_parent"
 
             android:orientation="horizontal">
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/typeOne"
-                android:text="Grass"/>
-            <TextView
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="12dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/typeOne"
+                    android:gravity="center"
+                    android:text="Grass"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/typeTwo"
-                android:text="Grass"/>
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="12dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/typeTwo"
+                    android:gravity="center"
+                    android:text="Grass"/>
+            </LinearLayout>
+
+
         </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -246,11 +273,15 @@
 
                 android:orientation="horizontal">
                 <TextView
+                    android:lineSpacingExtra="5dp"
                     android:layout_width="0dp"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="14dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:textSize="18sp"
                     android:id="@+id/flavorText"
-                    android:text="Lorem"/>
+                    android:text="Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -43,12 +43,8 @@ public class MainActivity extends AppCompatActivity {
         pokemonRecView.setAdapter(adapter);
         pokemonRecView.setLayoutManager(new GridLayoutManager(this, 1));
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pokeapi.co")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        PokemonService service = retrofit.create(PokemonService.class);
+        PokemonService service = Utils.retrofit.create(PokemonService.class);
         Call<PokemonListResponse> call = service.getPokemonList(25, 0); // Fetch the first 20 Pokémon
 
         call.enqueue(new Callback<PokemonListResponse>() {
@@ -79,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 // Handle network failures here
             }
         });
-
-
     }
 
 
@@ -92,16 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchPokemonDetails(String pokemonId, PokemonRecViewAdapter adapter) {
 
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pokeapi.co")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        PokemonService service = retrofit.create(PokemonService.class);
+        PokemonService service = Utils.retrofit.create(PokemonService.class);
         Call<Pokemon> call = service.getPokemonDetails(pokemonId);
-
-
 
         call.enqueue(new Callback<Pokemon>() {
             @Override

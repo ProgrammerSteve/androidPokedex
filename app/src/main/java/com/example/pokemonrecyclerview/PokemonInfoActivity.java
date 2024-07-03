@@ -1,12 +1,17 @@
 package com.example.pokemonrecyclerview;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -24,8 +29,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PokemonInfoActivity extends AppCompatActivity {
     private static final String TAG = "PokemonInfoActivity";
 
+    private CardView backCardBtn;
+    private ImageButton imageBtn;
     private TextView pokemonName;
     private TextView pokemonId;
+    private TextView pokemonWeight;
+    private TextView pokemonHeight;
     private TextView pokemonTypeOne;
     private TextView pokemonTypeTwo;
     private TextView pokemonFlavorText;
@@ -35,14 +44,26 @@ public class PokemonInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_info);
-        pokemonName=findViewById(R.id.componentPokemonName);
-        pokemonId=findViewById(R.id.componentPokemonId);
-        pokemonImage=findViewById(R.id.pokemonImage);
-        pokemonTypeOne=findViewById(R.id.typeOne);
-        pokemonTypeTwo=findViewById(R.id.typeTwo);
-        pokemonFlavorText=findViewById(R.id.flavorText);
+        pokemonName = findViewById(R.id.componentPokemonName);
+        pokemonId = findViewById(R.id.componentPokemonId);
+        pokemonImage = findViewById(R.id.pokemonImage);
+        pokemonWeight = findViewById(R.id.pokemonWeight);
+        pokemonHeight = findViewById(R.id.pokemonHeight);
+        pokemonTypeOne = findViewById(R.id.typeOne);
+        pokemonTypeTwo = findViewById(R.id.typeTwo);
+        pokemonFlavorText = findViewById(R.id.flavorText);
+        backCardBtn=findViewById(R.id.backCardBtn);
+        imageBtn=findViewById(R.id.imageBtn);
 
-        Bundle bundle=getIntent().getExtras();
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(PokemonInfoActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String nameValue = bundle.getString("name");
             String idValue = bundle.getString("id");
@@ -50,34 +71,43 @@ public class PokemonInfoActivity extends AppCompatActivity {
             String typeOne = bundle.getString("typeOne");
             String typeTwo = bundle.getString("typeTwo");
 
+            double weight=bundle.getDouble("weight");
+            double height=bundle.getDouble("height");
+
+            pokemonWeight.setText(String.valueOf(weight)+" kg");
+            pokemonHeight.setText(String.valueOf(height)+" cm");
+
             pokemonName.setText(nameValue);
             pokemonId.setText(idValue);
             pokemonTypeOne.setText(Utils.formatName(typeOne));
+
+            pokemonTypeOne.setBackgroundColor(Color.parseColor(Utils.TYPE_COLOR.get(typeOne)));
+            pokemonTypeOne.setTextColor(Color.WHITE);
             pokemonTypeTwo.setText(Utils.formatName(typeTwo));
+            if(typeTwo!=null && !typeTwo.isEmpty()){
+                pokemonTypeTwo.setBackgroundColor(Color.parseColor(Utils.TYPE_COLOR.get(typeTwo)));
+                pokemonTypeTwo.setTextColor(Color.WHITE);
+            }
+
 
             Glide.with(this)
                     .asBitmap()
                     .load(imageValue)
                     .into(pokemonImage);
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://pokeapi.co")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            PokemonService service = retrofit.create(PokemonService.class);
-            Log.d(TAG, "idValue: " +idValue);
+            PokemonService service = Utils.retrofit.create(PokemonService.class);
             Call<PokemonSpecies> call = service.getPokemonSpecies(idValue);
+
             call.enqueue(new Callback<PokemonSpecies>() {
                 @Override
                 public void onResponse(Call<PokemonSpecies> call, Response<PokemonSpecies> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         Log.d(TAG, "Response received: " + response.body());
-                        List<PokemonSpecies.FlavorTextEntry> flavorTextEntries = response.body().getFlavorTextEntries();
+                        List<PokemonSpecies.FlavorTextEntry> flavorTextEntries = response.body().getFlavor_text_entries();
                         if (flavorTextEntries != null && !flavorTextEntries.isEmpty()) {
                             for (PokemonSpecies.FlavorTextEntry entry : flavorTextEntries) {
                                 if ("en".equals(entry.getLanguage().getName())) {
-                                    String flavorText = entry.getFlavorText().replace("\n", " ");
+                                    String flavorText = entry.getFlavor_text().replace("\n", " ");
                                     pokemonFlavorText.setText(flavorText);
                                     return;
                                 }
@@ -105,16 +135,29 @@ public class PokemonInfoActivity extends AppCompatActivity {
                     Log.e(TAG, "Error: " + t.getMessage(), t);
                 }
             });
-        } else {
+
+
+
+
+
+
+
+
+
+
+        }else{
             Log.e(TAG, "No bundle received");
         }
 
 
 
 
-    }
 
 
 
+
+
+
+}
 }
 
