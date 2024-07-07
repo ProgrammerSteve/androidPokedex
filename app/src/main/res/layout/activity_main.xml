@@ -80,26 +80,31 @@
                             android:gravity="center"
                             android:orientation="horizontal">
 
-                            <ImageView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:src="@drawable/ic_search" />
-
-                            <com.google.android.material.textfield.TextInputEditText
+<!--                            <ImageView-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:src="@drawable/ic_search" />-->
+                            <SearchView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:hint="Name or Number" />
+                                android:id="@+id/searchView"
+                                android:queryHint="Enter Name..." />
+<!--                            <com.google.android.material.textfield.TextInputEditText-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="3"-->
+<!--                                android:hint="Name or Number" />-->
                         </LinearLayout>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <ImageButton
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#06318A"
-                        android:src="@drawable/ic_sort" />
+<!--                    <ImageButton-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="#06318A"-->
+<!--                        android:src="@drawable/ic_sort" />-->
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

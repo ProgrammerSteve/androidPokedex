@@ -17,36 +17,74 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.widget.Filter;
+import android.widget.Filterable;
+import java.util.stream.Collectors;
+
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokemonRecViewAdapter extends RecyclerView.Adapter<PokemonRecViewAdapter.ViewHolder> {
+public class PokemonRecViewAdapter extends RecyclerView.Adapter<PokemonRecViewAdapter.ViewHolder> implements Filterable {
 
     private List<Pokemon> pokemonList;
+    private List<Pokemon> pokemonListFull; //#######################################################
     private Context context;
 
     public PokemonRecViewAdapter(Context context) {
         this.context = context;
         this.pokemonList = new ArrayList<>();
+        this.pokemonListFull = new ArrayList<>(); //#######################################################
     }
 
     public void setPokemonList(List<Pokemon> pokemonList) {
         this.pokemonList = pokemonList;
-        Log.d("POKEMON_LIST",pokemonList.toString());
-        notifyDataSetChanged(); // Notify adapter of data change
+        this.pokemonListFull = new ArrayList<>(pokemonList); //#######################################################
+        notifyDataSetChanged();
     }
 
     // Method to add a single Pokemon to the list
     public void addPokemon(Pokemon pokemon) {
         pokemonList.add(pokemon);
-        for(Pokemon x:pokemonList ){
-            Log.d("POKEMON_ADDED",x.toString());
+        pokemonListFull.add(pokemon); //#######################################################
+        notifyItemInserted(pokemonList.size() - 1);// Notify adapter of item insertion
+    }
+
+
+
+    @Override
+    public Filter getFilter() {
+        return pokemonFilter;
+    }
+
+    private Filter pokemonFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Pokemon> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(pokemonListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                filteredList = pokemonListFull.stream()
+                        .filter(pokemon -> pokemon.getName().toLowerCase().contains(filterPattern))
+                        .collect(Collectors.toList());
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
         }
 
-        notifyItemInserted(pokemonList.size() - 1); // Notify adapter of item insertion
-    }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            pokemonList.clear();
+            pokemonList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 
     @NonNull
     @Override

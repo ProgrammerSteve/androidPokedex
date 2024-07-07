@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,20 +21,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView pokemonRecView;
+    SearchView searchView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("POKEMON","STARTING POKEDEX APPLICATION......");
-        Log.d("POKEMON","STARTING POKEDEX APPLICATION......");
-        Log.d("POKEMON","STARTING POKEDEX APPLICATION......");
-        Log.d("POKEMON","STARTING POKEDEX APPLICATION......");
-        Log.d("POKEMON","STARTING POKEDEX APPLICATION......");
-        Log.d("POKEMON","STARTING POKEDEX APPLICATION......");
 
-
+        searchView=findViewById(R.id.searchView);
         pokemonRecView = findViewById(R.id.pokemonRecycler);
         ArrayList<Pokemon> pokemonList = new ArrayList<>();
 
@@ -73,6 +69,21 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<PokemonListResponse> call, Throwable t) {
                 Log.e("MainActivity", "PokemonListResponse Failed");
                 // Handle network failures here
+            }
+        });
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
             }
         });
     }
